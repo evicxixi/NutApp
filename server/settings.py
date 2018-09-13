@@ -1,0 +1,2 @@
+DB = 'nutapp'
+COLLECTION = 'user'

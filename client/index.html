@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link rel="stylesheet" type="text/css" href="css/mui.css"/>
+    <link rel="stylesheet" type="text/css" href="css/costume.css"/>
+</head>
+<body>
+	<nav class="mui-bar mui-bar-tab">
+	    <a class="mui-tab-item mui-active">
+	        <span class="mui-icon mui-icon-home"></span>
+	        <span class="mui-tab-label">首页</span>
+	    </a>
+	    <a class="mui-tab-item" id="phone">
+	        <span class="mui-icon mui-icon-phone"></span>
+	        <span class="mui-tab-label">电话</span>
+	    </a>
+	    <a class="mui-tab-item">
+	        <span class="mui-icon mui-icon-email"></span>
+	        <span class="mui-tab-label">邮件</span>
+	    </a>
+	    <a class="mui-tab-item">
+	        <span class="mui-icon mui-icon-gear"></span>
+	        <span class="mui-tab-label">设置</span>
+	    </a>
+	</nav>
+	
+	
+	
+	
+    
+    <script src="js/mui.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+    mui.init({
+	    subpages:[{
+	      url:'main.html',//子页面HTML地址，支持本地地址和网络地址
+	      id:'main.html',//子页面标志
+	      styles:window.style,
+	      extras:{}//额外扩展参数
+	    }]
+	  });
+	  
+
+		mui.plusReady(function() {
+			console.log(JSON.stringify(plus.webview.currentWebview()))
+		});
+    
+    document.getElementById('phone').addEventListener('tap',function(){
+	    	mui.toast('你点击了phone按钮')
+				mui.openWindow({
+		      url:'phone.html',//子页面HTML地址，支持本地地址和网络地址
+		      id:'phone.html',//子页面标志
+		      styles:window.style,
+		      extras:{
+		      	phone:'123456',
+		      }//额外扩展参数
+
+		  });
+    })
+    </script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+*:not([class*="icon"]):not(i):not(pre):not(code):not(kbd):not(samp):not(var ) {
+	font-family: "Microsoft Yahei" !important;
+	text-shadow: 0.02em 0.02em 0.1em #999999 !important;
+}
+
+pre, code, kbd, samp, var {
+    font-family: "Microsoft Yahei","Monaco", "Consolas" !important;
+	text-shadow: 0.05em 0.05em 0.2em #999999 !important;
+}
+
+window.style = {
+	top: '0px';
+	bottom: '50px';
+}
