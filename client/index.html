@@ -1,64 +1,84 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <title>Document</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <link rel="stylesheet" type="text/css" href="css/mui.css"/>
-    <link rel="stylesheet" type="text/css" href="css/costume.css"/>
-</head>
-<body>
-	<nav class="mui-bar mui-bar-tab">
-	    <a class="mui-tab-item mui-active">
-	        <span class="mui-icon mui-icon-home"></span>
-	        <span class="mui-tab-label">首页</span>
-	    </a>
-	    <a class="mui-tab-item" id="phone">
-	        <span class="mui-icon mui-icon-phone"></span>
-	        <span class="mui-tab-label">电话</span>
-	    </a>
-	    <a class="mui-tab-item">
-	        <span class="mui-icon mui-icon-email"></span>
-	        <span class="mui-tab-label">邮件</span>
-	    </a>
-	    <a class="mui-tab-item">
-	        <span class="mui-icon mui-icon-gear"></span>
-	        <span class="mui-tab-label">设置</span>
-	    </a>
-	</nav>
-	
-	
-	
-	
-    
-    <script src="js/mui.js" type="text/javascript" charset="utf-8"></script>
-    <script type="text/javascript">
-    mui.init({
-	    subpages:[{
-	      url:'main.html',//子页面HTML地址，支持本地地址和网络地址
-	      id:'main.html',//子页面标志
-	      styles:window.style,
-	      extras:{}//额外扩展参数
-	    }]
-	  });
-	  
+
+	<head>
+		<meta charset="UTF-8" />
+		<title>Document</title>
+
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+	</head>
+
+	<body>
+		<nav class="mui-bar mui-bar-tab">
+			<a class="mui-tab-item mui-active" id="index">
+				<span class="mui-icon mui-icon-home"></span>
+				<span class="mui-tab-label">首页</span>
+			</a>
+			<a class="mui-tab-item">
+				<span class="mui-icon mui-icon-phone" id="phone"></span>
+				<span class="mui-tab-label">电话</span>
+			</a>
+			<a class="mui-tab-item">
+				<span class="mui-icon mui-icon-email"></span>
+				<span class="mui-tab-label">邮件</span>
+			</a>
+			<a class="mui-tab-item" id="settings">
+				<span class="mui-icon mui-icon-gear"></span>
+				<span class="mui-tab-label">设置</span>
+			</a>
+		</nav>
+
+	</body>
+	<script src="js/mui.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		//		mui.init();
+
+		mui.init({
+			subpages: [{
+				url: 'main.html', //子页面HTML地址，支持本地地址和网络地址
+				id: 'main.html', //子页面标志
+				styles: {
+					top: "0px",
+					bottom: "50px"
+				},
+//				styles:window.style,
+				extras: {} //额外扩展参数
+			}]
+		});
 
 		mui.plusReady(function() {
-			console.log(JSON.stringify(plus.webview.currentWebview()))
+			// 加载HTML5Puls
+			// 	plusReady是在页面加载完成后执行的
+			// 凡用到plus的函数 均需写在plusReady()之后
 		});
-    
-    document.getElementById('phone').addEventListener('tap',function(){
-	    	mui.toast('你点击了phone按钮')
-				mui.openWindow({
-		      url:'phone.html',//子页面HTML地址，支持本地地址和网络地址
-		      id:'phone.html',//子页面标志
-		      styles:window.style,
-		      extras:{
-		      	phone:'123456',
-		      }//额外扩展参数
+		document.getElementById('index').addEventListener('tap', function() {
+			mui.toast('你点击了index按钮')
+			var Sdata = plus.webview.currentWebview();
+			console.log(JSON.stringify(Sdata))
+			mui.toast(Sdata.id)
+		})
 
-		  });
-    })
-    </script>
-</body>
+		document.getElementById('phone').addEventListener('tap', function() {
+			mui.toast('你点击了phone按钮')
+			to_url('phone.html')
+		})
+		document.getElementById('settings').addEventListener('tap', function() {
+//			mui.toast('你点击了settings按钮')
+			var username = plus.storage.getItem('username');
+			if(username){
+				mui.toast(username)
+				data = {username:username,}
+				to_url('user_info.html',data)
+			} else{
+				mui.toast('请先登录')
+				to_url('login.html')
+			}
+		})
+
+		document.addEventListener("talk", function(data) {
+			// 监听开火事件
+			mui.toast(data.detail.data.msg);
+		})
+	</script>
 </html>
