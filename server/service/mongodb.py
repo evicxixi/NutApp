@@ -12,11 +12,14 @@ def get_db_client(db, collection):
     return db, collection
 
 
-def find_one(collection, username):
+def find_one(collection, username=None, user_id=None):
     '''
     查找是否存在指定用户
     '''
-    user_obj = collection.find_one({'username': username})
+    if user_id:
+        user_obj = collection.find_one({'_id': user_id})
+    else:
+        user_obj = collection.find_one({'username': username})
     if user_obj:
         return user_obj
     else:
@@ -28,7 +31,7 @@ def insert_one(collection, data):
     在指定MongoDB的collection中插入一条数据
     '''
     username = data.get('username')
-    if find_one(collection, username):
+    if find_one(collection, username=username):
         return False
     else:
         collection.insert_one(data)

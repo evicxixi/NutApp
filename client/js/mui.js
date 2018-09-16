@@ -7,6 +7,23 @@
  * MUI核心JS
  * @type _L4.$|Function
  */
+window.styles = {
+	top: "0px",
+	bottom: "50px"
+}
+window.server = 'http://127.0.0.1:5000/'
+
+function to_url(url, data=null) {
+	if (data == false){data={}}
+    mui.openWindow({
+        url: url, //跳转页面HTML地址，支持本地地址和网络地址
+        id: url, //跳转页面标志
+        styles: window.style,
+        extras: data,
+    })
+}
+
+
 var mui = (function(document, undefined) {
 	var readyRE = /complete|loaded|interactive/;
 	var idSelectorRE = /^#([\w-]+)$/;

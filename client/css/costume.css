@@ -8,7 +8,4 @@ pre, code, kbd, samp, var {
 	text-shadow: 0.05em 0.05em 0.2em #999999 !important;
 }
 
-window.style = {
-	top: '0px';
-	bottom: '50px';
-}
+

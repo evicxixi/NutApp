@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, send_file
 from flask import jsonify
 from service import mongodb
 import settings
+import bson
 
 # cors 跨域访问
 from flask_cors import *
@@ -27,10 +28,11 @@ def login():
 
     db, collection = mongodb.get_db_client(
         settings.DB, settings.COLLECTION)    # 获取db.collection对象
-    user_obj = mongodb.find_one(collection, username)
+    user_obj = mongodb.find_one(collection, username=username)
 
     if not user_obj:
         data = {
+            'username': None,
             'nickname': None,
             'msg': '登录失败 用户名不存在！',
             'code': -2,
@@ -38,12 +40,14 @@ def login():
     else:
         if not password == user_obj.get('password'):
             data = {
+                'username': user_obj.get('username'),
                 'nickname': user_obj.get('nickname'),
                 'msg': '登录失败 密码错误！',
                 'code': -1,
             }
         elif password == user_obj.get('password'):
             data = {
+                'username': user_obj.get('username'),
                 'nickname': user_obj.get('nickname'),
                 'msg': '登录成功！',
                 'code': 1,
@@ -87,6 +91,18 @@ def signin():
             'code': -1,
         }
     return jsonify(data)
+
+
+@app.route('/user_info', methods=['GET', 'POST'])
+def user_info():
+    print('----------->')
+    username = request.values.getlist('username')[0]
+    db, collection = mongodb.get_db_client(
+        settings.DB, settings.COLLECTION)    # 获取db.collection对象
+    user_obj = mongodb.find_one(collection, username=username)
+    user_obj['_id'] = str(user_obj['_id'])
+    print('user_id', user_obj, type(user_obj))
+    return jsonify(user_obj)
 
 
 if __name__ == '__main__':
