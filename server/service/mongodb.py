@@ -1,4 +1,5 @@
 from pymongo import MongoClient
+from bson.objectid import ObjectId
 
 
 def get_db_client(db, collection):
@@ -12,27 +13,34 @@ def get_db_client(db, collection):
     return db, collection
 
 
-def find_one(collection, username=None, user_id=None):
+def find_one(collection, username=None, id=None):
     '''
     查找是否存在指定用户
     '''
-    if user_id:
-        user_obj = collection.find_one({'_id': user_id})
+    if id:
+        data = collection.find_one({'_id': ObjectId(id)})
+        data['_id'] = str(data.get('_id'))
     else:
-        user_obj = collection.find_one({'username': username})
-    if user_obj:
-        return user_obj
+        data = collection.find_one({'username': username})
+    if data:
+        return data
     else:
         return False
+
+
+def find_all(collection):
+    '''
+    查找
+    '''
+
+    data = collection.find()
+    # print('data', type(data), data)
+    return data
 
 
 def insert_one(collection, data):
     '''
     在指定MongoDB的collection中插入一条数据
     '''
-    username = data.get('username')
-    if find_one(collection, username=username):
-        return False
-    else:
-        collection.insert_one(data)
-        return True
+    collection.insert_one(data)
+    return True

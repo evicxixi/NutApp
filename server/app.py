@@ -3,12 +3,15 @@ from flask import jsonify
 from service import mongodb
 import settings
 import bson
+from blueprint import collector
 
 # cors 跨域访问
 from flask_cors import *
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)  # cors 跨域访问
+
+app.register_blueprint(collector.collector)    # 注册蓝图
 
 
 @app.route('/')
