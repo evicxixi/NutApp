@@ -20,7 +20,7 @@
 				<span class="mui-tab-label">电话</span>
 			</a>
 			<a class="mui-tab-item">
-				<span class="mui-icon mui-icon-email"></span>
+				<span class="mui-icon mui-icon-email" id="email"></span>
 				<span class="mui-tab-label">邮件</span>
 			</a>
 			<a class="mui-tab-item" id="settings">
@@ -38,20 +38,32 @@
 			subpages: [{
 				url: 'main.html', //子页面HTML地址，支持本地地址和网络地址
 				id: 'main.html', //子页面标志
-				styles: {
-					top: "0px",
-					bottom: "50px"
-				},
-//				styles:window.style,
+				styles:window.style,
 				extras: {} //额外扩展参数
 			}]
 		});
+
+		function audio_list(){
+            mui.post(
+                window.server + 'audio_list',
+                {},
+                function(data){
+//                  var data = JSON.stringify(data);
+//                  mui.toast(data.length)
+                }
+            )
+        }
+		
+		mui.ready(function(){
+			
+		})
 
 		mui.plusReady(function() {
 			// 加载HTML5Puls
 			// 	plusReady是在页面加载完成后执行的
 			// 凡用到plus的函数 均需写在plusReady()之后
 		});
+		
 		document.getElementById('index').addEventListener('tap', function() {
 			mui.toast('你点击了index按钮')
 			var Sdata = plus.webview.currentWebview();
@@ -60,9 +72,15 @@
 		})
 
 		document.getElementById('phone').addEventListener('tap', function() {
-			mui.toast('你点击了phone按钮')
-			to_url('phone.html')
+			mui.toast('你点击了phone按钮');
+			to_url('phone.html');
 		})
+		
+		document.getElementById('email').addEventListener('tap', function() {
+//			mui.toast('你点击了email按钮');
+			audio_list();
+		})
+		
 		document.getElementById('settings').addEventListener('tap', function() {
 //			mui.toast('你点击了settings按钮')
 			var username = plus.storage.getItem('username');
@@ -80,5 +98,15 @@
 			// 监听开火事件
 			mui.toast(data.detail.data.msg);
 		})
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	
 	</script>
 </html>
