@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title" id="title_text">正在播放</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-row" style="text-align: center;margin-top: 5px;">
+				<img src="" style="width: 250px;height: 250px; border-radius: 50%;" id="avatar" />
+			</div>
+			<button type="button" class="mui-btn mui-btn-blue mui-btn-block" id="play">播放</button>
+			<button type="button" class="mui-btn mui-btn-yellow mui-btn-block" id="pause">暂停</button>
+			<button type="button" class="mui-btn mui-btn-green mui-btn-block" id="resume">继续</button>
+			<button type="button" class="mui-btn mui-btn-red mui-btn-block" id="stop">停止</button>
+			<button type="button" class="mui-btn mui-btn-blue mui-btn-block" id="send2toy">发送给玩具</button>
+		</div>
+		
+		
+		
+	</body>
+	<script src="js/mui.min.js"></script>
+	<script type="text/javascript">
+		mui.init()
+		mui.plusReady(function(){
+			Sdata = plus.webview.currentWebview();
+//			mui.toast(Sdata.content_id)
+//			console.log(Sdata.content_id)
+			mui.post(
+				'http://127.0.0.1:5000/content_one',
+//				+ '/content_one',
+				{content_id:Sdata.content_id},
+				function(data){
+					document.getElementById('avatar').src = 'http://127.0.0.1:5000/file/' + data.cover_path;
+					document.getElementById("title_text").innerText = "playing  " + data.title;
+					var url = 'http://127.0.0.1:5000/file/' + data.audio_path;
+					var url = 'http://127.0.0.1:5000/file/audio/572d5fa2-4406-4346-b6d9-0374bdd5c840.mp3'
+					play_anything(url);
+				}
+			)
+		})
+		
+		function play_anything(url){
+//			mui.toast(url);
+//			console.log(url,typeof(url));
+			player = plus.audio.createPlayer(url);
+			player.play();
+		}
+		
+		document.getElementById('play').addEventListener('top',function(){
+			player.play();
+		})
+		document.getElementById("pause").addEventListener("tap", function() {
+			player.pause();
+		})
+		document.getElementById("resume").addEventListener("tap", function() {
+			player.resume();
+		})
+		document.getElementById("stop").addEventListener("tap", function() {
+			player.stop(); // 直接清空player中的对象
+		})
+	</script>
+
+</html>

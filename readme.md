@@ -26,7 +26,8 @@ App点拨歌曲。
 
 ## 功能
 ~~~
-index页面实现点播歌曲。
+index页面实现点播音乐。
+player页面实现音乐播放控制。
 
 ~~~
 
@@ -34,5 +35,6 @@ index页面实现点播歌曲。
 ~~~
 20190916 <finish> App前端页面搭建（index、login、signin、user_info）及配套server端功能。
         <bug> 执行logout后，退出App，再次打开App仍处于login状态。
-20190917 <finish> index页面实现点播歌曲。
+20190917 <finish> index页面实现点播音乐。
+20190918 <finish> player页面实现音乐播放控制。发送音乐到toy尚未完成。
 ~~~
