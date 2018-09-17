@@ -17,14 +17,23 @@
 		</header>
 
 		<div class="mui-content">
-			<br>
+			
+			<div class="mui-row" style="text-align: center;">
+				<img src="" id="avatar" / style="width: 250px;height: 250px; border-radius: 100%;">
+			</div>
 			<ul class="mui-table-view">
 				<li class="mui-table-view-cell">用户名 ：<span id="username"></span></li>
 				<li class="mui-table-view-cell">昵称：<span id="nickname"></span></li>
 			</ul>
-			
-			
-			<br>
+			<br />
+			<ul class="mui-table-view">
+				<!--<a href="">-->
+				    <li class="mui-table-view-cell" id="toy_manage">Toy Manage
+				        <span class="mui-badge mui-badge-primary">11</span>
+				    </li>
+				<!--</a>-->
+			</ul>
+
 			<div class="mui-button-row">
 				<button type="button" class="mui-btn mui-btn-red" id="logout">Logout</button>
 			</dev>
@@ -44,12 +53,8 @@
 
 		// 加载HTML5Puls
 		mui.plusReady(function() {
-//			mui.toast('...222')
 			var plus_obj = plus.webview.currentWebview();
 			var username = plus_obj.username;
-//			mui.toast(username)
-//			var url = window.server + 'user_info';
-//			mui.toast(url);
 			mui.post(
 //				window.server + 'user_info';
 				'http://127.0.0.1:5000/user_info',
@@ -62,13 +67,14 @@
 		});
 		
 		document.getElementById('logout').addEventListener('tap', function() {
-//			mui.toast('你点击了logout按钮')
 			plus.storage.removeItem('username');
-//			mui.toast(username)
-//			var username = plus.storage.getItem('username');
 			mui.toast('已退出')
-//			mui.toast(username)
 //			to_url('index.html')
+		});
+		
+		document.getElementById('toy_manage').addEventListener('tap', function() {
+			mui.toast('toy_manage')
+			to_url('toy_manage.html')
 		});
 	</script>
 

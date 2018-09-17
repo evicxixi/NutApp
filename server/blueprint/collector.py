@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, render_template, send_file
+from flask import Blueprint, redirect, render_template, send_file, request
 from flask import jsonify
 import settings
 import json
@@ -29,3 +29,15 @@ def get_file(type, id):
     type = str(type)
     content_path = type + '/' + id
     return send_file(content_path)
+
+
+@collector.route("/content_one", methods=['GET', "POST"])
+def content_one():
+    content_id = request.values.get("content_id")
+    print('content_id', type(content_id), content_id)
+    db, collection = mongodb.get_db_client('nutapp', 'content')
+    data = mongodb.find_one(collection, id=content_id)
+    print('content_one data', data, type(data))
+    # type = str(type)
+    # content_path = type + '/' + id
+    return jsonify(data)

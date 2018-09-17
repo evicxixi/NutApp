@@ -17,7 +17,9 @@ def find_one(collection, username=None, id=None):
     '''
     查找是否存在指定用户
     '''
+    # id = '123456777777123456777777'
     if id:
+        print('id', type(id), id)
         data = collection.find_one({'_id': ObjectId(id)})
         data['_id'] = str(data.get('_id'))
     else:

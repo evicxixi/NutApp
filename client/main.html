@@ -99,7 +99,11 @@
 				li.className = "mui-table-view-cell mui-media"
 				var a = document.createElement("a");
 				a.id = content._id;
-				a.href = window.server +'file/' + content.audio_path;
+//				a.href = window.server +'file/' + content.audio_path;
+				a.onclick = function(){
+//					mui.toast('233')
+					openPlayer(content._id);
+				}
 				var img = document.createElement("img");
 				img.className = "mui-media-object mui-pull-left";
 				img.src = window.server +'file/' + content.cover_path;
@@ -124,13 +128,21 @@
 	                {},
 	                function(data){
 //	                    var data = JSON.stringify(data);
-	                    mui.toast(data.length)
+//	                    mui.toast(data.length)
 	                    for (var i = 0; i < data.length; i++) {
+//	                    		console.log(data[i])
 	                    		creat_content(data[i]);
 	                    };
 	                }
 	            )
 	        }
+			
+			function openPlayer(content_id){
+//				mui.toast('content_id');
+				console.log(content_id)
+				var data = {content_id:content_id};
+				to_url('player.html',data);
+			}
 			
 			mui.ready(function(){
 				audio_list();
